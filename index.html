@@ -2,21 +2,53 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Buddy's Number Routine</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Buddy’s Number Routine</title>
   <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fef6e4;
+      color: #333;
+      max-width: 400px;
+      margin: auto;
+      padding: 1em;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: #f582ae;
+      margin: 0.5em 0;
+      padding: 1em;
+      border-radius: 10px;
+      cursor: pointer;
+      user-select: none;
+      font-size: 1.2em;
+    }
+    li.done {
+      background: #a0e3a0;
+      text-decoration: line-through;
+      color: #333;
+    }
+    button {
+      margin-top: 1em;
+      padding: 0.7em 1.5em;
+      font-size: 1em;
+      background: #f582ae;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
+
   <h1>Buddy’s Number Routine</h1>
-  
+  <ul id="routine-list"></ul>
   <button id="reset-btn">Reset Routine</button>
-
-  <audio id="done-sound" src="Sounds/jobs_done.mp3" preload="auto"></audio>
-
-
-
-  
 
   <script src="app.js"></script>
 </body>

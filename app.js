@@ -12,37 +12,45 @@ const steps = [
 ];
 
 const list = document.getElementById("routine-list");
+const resetBtn = document.getElementById("reset-btn");
 
-const doneSound = document.getElementById("done-sound");
+const synth = window.speechSynthesis;
 
 function speak(text) {
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.rate = 0.8; // slower and clearer
-  utterance.pitch = 1.2; // higher pitch, friendly tone
-  window.speechSynthesis.speak(utterance);
+  if (synth.speaking) {
+    synth.cancel(); // Stop current speech
+  }
+  const utter = new SpeechSynthesisUtterance(text);
+  // Child-friendly voice options (you can customize)
+  utter.lang = 'en-US';
+  utter.rate = 0.9;
+  utter.pitch = 1.2;
+  synth.speak(utter);
 }
 
-steps.forEach((step, index) => {
-  const li = document.createElement("li");
-  li.textContent = step;
-
-  li.addEventListener("click", () => {
-    li.classList.toggle("done");
-    speak(step);  // speak the step text when clicked
+function renderList() {
+  list.innerHTML = "";
+  steps.forEach(step => {
+    const li = document.createElement("li");
+    li.textContent = step;
+    li.addEventListener("click", () => {
+      li.classList.toggle("done");
+      speak(step);
+    });
+    list.appendChild(li);
   });
+}
 
-  list.appendChild(li);
+resetBtn.addEventListener("click", () => {
+  // Remove all done classes
+  const items = list.querySelectorAll("li.done");
+  items.forEach(item => item.classList.remove("done"));
 });
+
+renderList();
 
 // Register Service Worker
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('service-worker.js')
     .then(() => console.log("Service Worker registered"));
 }
-
-const resetBtn = document.getElementById("reset-btn");
-
-resetBtn.addEventListener("click", () => {
-  const items = list.querySelectorAll("li.done");
-  items.forEach(item => item.classList.remove("done"));
-});
